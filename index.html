@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;700;900&display=swap" rel="stylesheet">
+    <title>NOTES</title>
+</head>
+<body>
+    <div class="container" id="main-container">
+        <div class="header-wrapper">
+            <div class="header-input">
+                <input type="text" id="book-name" placeholder="Book name">
+                <input type="text" id="author-name" placeholder="author name">
+                <input type="text" id="part-name" placeholder="part name">
+            </div>
+        </div>
+        <div class="note-input">
+            <input type="text" id="subpart-name" placeholder="subpart name">
+            <textarea name="note" id="note-textarea" cols="30" rows="8"></textarea>
+            <button id="add-button">ADD NOTE</button>
+            <div id="placeholder-div">
+                <div class="g-item"></div>
+                <div class="g-item"></div>
+                <div class="g-item"></div>
+                <div class="g-item"></div>
+                <div class="g-item"></div>
+                <div class="g-item"></div>
+                <div class="g-item"></div>
+                <div class="g-item"></div>
+                <div class="g-item"></div>
+                <div class="g-item"></div>
+                <div class="g-item"></div>
+                <div class="g-item"></div>
+                <div class="g-item"></div>
+            </div>
+        </div>
+        <div class="added-part">
+            <div id="horizontal-text-line"></div>
+            <div class="vertical-line-wrapper">
+                <div id="vertical-text-line"></div>
+            </div>
+            <ul id="added-notes">
+                <li id="no-notes">no notes yet</li>
+                <button id="clear-all-button">Clear all</button>
+            </ul>
+            <div id="opened-part">
+                <h1 id="opened-header">WORKING 01</h1>
+                <div id="working-note-area">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="script.js"></script>
+</html>

@@ -1,0 +1,336 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+ul {
+    list-style: none;
+}
+
+input,textarea {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: black;
+}
+
+input::placeholder {
+    color: black;
+}
+
+/* UP IS COMMON CONFIGURATION */
+
+h1 {
+    font-size: 62px;
+    letter-spacing: 6px;
+}
+.container {
+    width: 100vw;
+    height: 100vh;
+    max-width: 100%;
+    position: relative;
+    padding: 5%;
+}
+
+
+#greeting-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#greeting-container h1 {
+    color: black;
+    user-select: none;
+    font-weight: 400;
+}
+
+
+/* header */
+
+.header-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.header-input {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+}
+
+.header-input input {
+    width: 100%;
+    text-align: right;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    height: 0.9em;
+}
+
+#author-name {
+    font-weight: 700;
+    /* font-size: 112px; */
+}
+
+#book-name {
+    font-weight: 100;
+    /* font-size: 64px; */
+    padding-right: 10px;
+}
+
+#part-name {
+    font-weight: 300;
+    font-size: 16px;
+    padding-right: 15px;
+    margin-top: 40px;
+}
+
+/* note input */
+
+.note-input {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 100px;
+    width: 90%;
+}
+
+#subpart-name {
+    font-size: 24px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 25px;
+}
+
+#note-textarea {
+    resize: none;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.2rem;
+    letter-spacing: 0.15em;
+}
+
+#note-textarea::placeholder {
+    color: black
+}
+
+.note-input button {
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-align: right;
+    cursor: pointer;
+    margin: 15px 0;
+}
+
+
+#placeholder-div {
+    /* background-color: black; */
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    height: 9.6rem;
+    width: 100%;
+
+    display: flex;
+    align-items: flex-end;
+    --count: 12;
+    --speed: 1s;
+}
+
+.g-item {
+    --f: var(--speed) / -12;
+    flex-grow: 1;
+    height: 9.6rem;
+    /* background-color: #000; */
+    /* color: white; */
+    
+    animation: heightChange var(--speed) infinite ease-in-out alternate;
+
+    position: relative;
+}
+
+.g-item p {
+    transform: rotate(-90deg);
+    /* height: 100%; */
+    position: absolute;
+    width: 20.6rem;
+    top: 52px;
+    left: -121px;
+    font-size: 10px;
+    font-weight: 300;
+    /* letter-spacing: 1px; */
+    text-align: right;
+}
+
+@keyframes heightChange {
+    from {
+        height: 50px;
+    }
+    to {
+        height: 9.6rem;
+    }
+}
+
+/* added part */
+
+.added-part {
+    position: relative;
+    width: 90%;
+    padding-top: 10%;
+    display: flex;
+    flex-direction: row;
+}
+
+#horizontal-text-line,
+#vertical-text-line {
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin: 10px 0;
+    position: absolute;
+}
+
+#horizontal-text-line {
+    top: 10px;
+    left: 0px;
+}
+
+#vertical-text-line {
+    transform: rotate(90deg);
+    transform-origin: 0 100%;
+    height: 10px;
+    width: 1000px;
+}
+
+.vertical-line-wrapper {
+    position: absolute;
+    top: 0px;
+    right: -10%;
+}
+
+#added-notes {
+    min-width: 400px;
+    margin-right: 100px;
+}
+
+#added-notes > li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 60px;
+    cursor: pointer;
+    user-select: none;
+    margin: 30px 0;
+    text-transform: uppercase;
+}
+
+.not-clicked p, 
+.not-clicked button{
+    font-weight: 700;
+}
+
+.clicked p {
+    font-weight: 200;
+}
+.clicked button {
+    font-weight: 300;
+}
+
+#added-notes > li p {
+    font-size: 60px;
+}
+
+.subpart-list {
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    line-height: 1.1rem;
+    text-transform: uppercase;
+    margin: 0 30px;
+    width: 300px;
+}
+
+.subpart-list li {
+    width: 260px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#added-notes > li button {
+    background: transparent;
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    height: 16px;
+    font-size: 16px;
+    user-select: none;
+    display: flex;
+    height: 100%;
+    align-items: flex-end;
+}
+
+#clear-all-button {
+    background: transparent;
+    border: none;
+    text-transform: uppercase;
+    font-weight: 900;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    margin-top: 25px;
+    text-align: center;
+    width: 100%;
+    height: 30px;
+    user-select: none;
+}
+
+#added-notes #no-notes {
+    text-align: center;
+    font-weight: 300;
+    width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 35px;
+    display: block;
+    margin: 0px;
+}
+
+#opened-part {
+    flex-grow: 1;
+}
+
+#opened-part h1 {
+    text-align: right;
+    margin-bottom: 55px;
+    text-transform: uppercase;
+}
+
+#working-note-area ul {
+    padding: 10px 20px;
+}
+
+#working-note-area h3 {
+    letter-spacing: 0.15em;
+    margin-top: 25px;
+    font-size: 16px;
+    line-height: 1.5rem;
+    text-transform: uppercase;
+}
+
+#working-note-area li {
+    font-weight: 300;
+    font-size: 16px;
+    letter-spacing: 0.15em;
+    line-height: 1.5rem;
+}
