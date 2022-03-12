@@ -29,10 +29,10 @@ h1 {
 }
 .container {
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     max-width: 100%;
     position: relative;
-    padding: 5%;
+    padding: 5% 5% 0;
 }
 
 
@@ -95,8 +95,9 @@ h1 {
     display: flex;
     flex-direction: column;
     position: relative;
-    margin-top: 100px;
+    margin: 100px 0 50px;
     width: 90%;
+    height: 256px;
 }
 
 #subpart-name {
@@ -120,6 +121,9 @@ h1 {
 }
 
 .note-input button {
+    position: absolute;
+    bottom: 12px;
+    right: 0;
     background: transparent;
     border: none;
     font-size: 16px;
@@ -128,56 +132,56 @@ h1 {
     text-transform: uppercase;
     text-align: right;
     cursor: pointer;
-    margin: 15px 0;
 }
 
-
-#placeholder-div {
-    /* background-color: black; */
+#custom-loader {
     position: absolute;
-    top: 50px;
-    left: 0px;
-    height: 9.6rem;
-    width: 100%;
-
-    display: flex;
-    align-items: flex-end;
-    --count: 12;
-    --speed: 1s;
+    top: -70px;
+    left: 10%;
+    width: 298px;
+    height: 298px;
+    transform: translate(-50%, 0);
+    transform-origin: center;
+    animation: loader-spin 450s infinite;
 }
 
-.g-item {
-    --f: var(--speed) / -12;
-    flex-grow: 1;
-    height: 9.6rem;
-    /* background-color: #000; */
-    /* color: white; */
-    
-    animation: heightChange var(--speed) infinite ease-in-out alternate;
-
-    position: relative;
-}
-
-.g-item p {
-    transform: rotate(-90deg);
-    /* height: 100%; */
+#custom-loader span {
+    font-size: 22px;
+    font-weight: 100;
+    height: 150px;
     position: absolute;
-    width: 20.6rem;
-    top: 52px;
-    left: -121px;
-    font-size: 10px;
-    font-weight: 300;
-    /* letter-spacing: 1px; */
-    text-align: right;
+    width: 20px;
+    left: 47%;
+    top: 0;
+    transform-origin: bottom center;
+    user-select: none;
+    background: black;
+    color: white;
+    padding-top: 20px;
 }
 
-@keyframes heightChange {
+@keyframes loader-spin {
     from {
-        height: 50px;
+        transform: rotate(0deg);
     }
     to {
-        height: 9.6rem;
+        transform: rotate(18000deg);
     }
+}
+
+#loader-begin-button {
+    position: absolute;
+    /* top: -70px; */
+    z-index: 2;
+    position: absolute;
+    color: white;
+    top: 68px;
+    left: calc(10% + 149px);
+    letter-spacing: 0.15em;
+    font-weight: 900;
+    font-size: 14px;
+    cursor: pointer;
+    transform: translate(-50%, 0);
 }
 
 /* added part */
@@ -185,23 +189,29 @@ h1 {
 .added-part {
     position: relative;
     width: 90%;
+    height: 1019px;
     padding-top: 10%;
     display: flex;
     flex-direction: row;
 }
 
-#horizontal-text-line,
-#vertical-text-line {
-    font-size: 10px;
+.line {
+    font-size: 8px;
     font-weight: 300;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     margin: 10px 0;
     position: absolute;
+    user-select: none;
 }
 
 #horizontal-text-line {
     top: 10px;
+    left: 0px;
+}
+
+#horizontal-text-line-bottom {
+    bottom: 94px;
     left: 0px;
 }
 
@@ -285,7 +295,7 @@ h1 {
     background: transparent;
     border: none;
     text-transform: uppercase;
-    font-weight: 900;
+    font-weight: 700;
     letter-spacing: 0.15em;
     cursor: pointer;
     margin-top: 25px;
@@ -293,11 +303,12 @@ h1 {
     width: 100%;
     height: 30px;
     user-select: none;
+    font-size: 16px;
 }
 
 #added-notes #no-notes {
     text-align: center;
-    font-weight: 300;
+    font-weight: 100;
     width: 100%;
     text-transform: uppercase;
     letter-spacing: 0.15em;
@@ -334,3 +345,31 @@ h1 {
     letter-spacing: 0.15em;
     line-height: 1.5rem;
 }
+
+.black-footer {
+    position: absolute;
+    height: 30px;
+    bottom: 0;
+    left: 0;
+    background-color: black;
+    width: 100%;
+}
+
+.right-name {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    width: 270px;
+    right: -95px;
+    top: 27%;
+
+    color: white;
+    background-color: black;
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    transform: rotate(-90deg);
+}
+

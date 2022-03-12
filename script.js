@@ -1,6 +1,3 @@
-// document.getElementById('note-textarea').placeholder = "new text new text new text ".repeat(30);
-
-document.getElementById('vertical-text-line').innerText = "new text ".repeat(12);
 document.getElementById('add-button').addEventListener('click', () => addText())
 
 const horizontalLine = document.getElementById('horizontal-text-line') 
@@ -27,14 +24,12 @@ let currentNoteIndex = 1
 let currentSubpartName = ""
 let currentSubnoteIndex = 1
 
-horizontalLine.innerText = "new text ".repeat(15);
 authorNameInput.style.fontSize =  INITIAL_AUTHOR_FONT_VALUE + "px" 
 bookNameInput.style.fontSize =  INITIAL_BOOK_FONT_VALUE + "px"
 authorNameInput.addEventListener("input", (e) => inputAutoResize(e, INITIAL_AUTHOR_FONT_VALUE))
 bookNameInput.addEventListener("input", (e) => inputAutoResize(e, INITIAL_BOOK_FONT_VALUE))
 subpartNameInput.addEventListener('input', (e) => currentSubpartName = acceptTitles(e.target.value))
 
-// noteTextArea.placeholder = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl condimentum id venenatis a condimentum vitae sapien. Amet nisl purus in mollis. Varius duis at consectetur lorem. Purus non enim praesent elementum facilisis leo vel fringilla. Scelerisque felis imperdiet proin fermentum leo vel orci porta non. Tempus iaculis urna id volutpat lacus laoreet non curabitur. Et malesuada fames ac turpis egestas maecenas pharetra convallis. Aenean et tortor at risus viverra adipiscing at. Nisl rhoncus mattis rhoncus urna neque viverra justo nec ultrices. Nibh tellus molestie nunc non. Cursus vitae congue mauris rhoncus aenean. Lobortis scelerisque fermentum dui faucibus in. Ligula ullamcorper malesuada proin libero nunc consequat.'
 noteTextArea.placeholder = 'YOUR TEXT';
 noteTextArea.addEventListener('input', (e) => {
     e.target.value = acceptText(e.target.value)
@@ -43,17 +38,42 @@ noteTextArea.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') addText()
 })
 
-const placeholderDiv = document.getElementById('placeholder-div'); 
-placeholderDiv.addEventListener('click', (e) => placeholderDiv.style.display = 'none');
+onInit();
 
-const f = 1 / -10;
-for (let i = 0; i < placeholderDiv.childNodes.length; i++) {
-    if (placeholderDiv.children[i]) {
-        placeholderDiv.children[i].innerHTML = `<p>${'note making asap  '.repeat(28)}</p>`;
-        placeholderDiv.children[i].style['animation-delay'] = f * i + 's';
-    }
+function onInit() {
+    handleLoader();
+    handleTextLines();
 }
 
+function handleLoader() {
+    // creating loader
+    const LOADER_TEXT = 'ЗНАННЯ ЗАРАДИ МИРУ    '.repeat(3);
+    const customLoader = document.getElementById('custom-loader');
+    customLoader.replaceChildren(...LOADER_TEXT.split('').map((c, i) => {
+        const span = document.createElement('span');
+        span.innerText = c;
+        span.style['transform'] = `rotate(${i * 8}deg) translate(-47%, 0)`
+        return span;
+    }))
+    
+    // hiding textarea and title
+    const initialHidden = Array.from(document.getElementsByClassName('initial-hidden'));
+    initialHidden.map(i => (i.style['display'] = 'none'));
+
+    // adding event on click
+    const loaderButton = document.getElementById('loader-begin-button');
+    loaderButton.addEventListener('click', () => {
+        initialHidden.map(i => (i.style['display'] = 'block'));
+        customLoader.style['display'] = 'none';
+        loaderButton.style['display'] = 'none';
+    }); 
+}
+
+function handleTextLines() {
+    horizontalLine.innerText = "НОВИЙ ТЕКСТ ".repeat(15);
+    document.getElementById('vertical-text-line').innerText = "НОВИЙ ТЕКСТ ".repeat(12) + "НОВИЙ PST.";
+    document.getElementById('horizontal-text-line-bottom').innerText = "НОВИЙ ТЕКСТ ".repeat(3);
+}
 
 function inputAutoResize(event, initialFontValue) {
     const element = event.target
@@ -252,7 +272,7 @@ function addText() {
     
     // line
     const neededValue = Math.round(UPPER_LINE_RANGE * (totalCharNumber + noteTextCharNumber) / LETTER_MAX)
-    horizontalLine.innerHTML = "new text ".repeat(15).split('').slice(0, neededValue).join('')
+    horizontalLine.innerHTML = "НОВИЙ ТЕКСТ ".repeat(15).split('').slice(0, neededValue).join('')
     
     // clearing textarea value
     noteTextArea.value = ''
@@ -343,81 +363,6 @@ function copyText(index) {
     document.getElementById('list-' + (index + 1)).classList = 'clicked'
 }
 
-
-
-
-
-
-
-
-
-
-
-
-// const fontSizeCoef = 0.8
-
-// const authorNameInput = document.getElementById("author-name")
-// const bookNameInput = document.getElementById("book-name")
-// const wrapper = document.getElementsByClassName('left-part')[0]
-
-// authorNameInput.addEventListener('input', (e) => enlargeInput(e, 290))
-// bookNameInput.addEventListener('input', (e) => enlargeInput(e, 290))
-
-// authorNameInput.style.fontSize =  initialFontValue + "px"
-// bookNameInput.style.fontSize =  initialFontValue + "px"
-
-
-function enlargeInput(event, initialWidth) {
-    const element = event.target
-    const letterAmount = event.target.value.split("").length
-
-    const currentDivWidth = Number(element.style.width.split('px')[0])
-    let commonNameFontSize = Number(bookNameInput.style.fontSize.split("px")[0])
-
-    // checks wethere is enough space 
-    if(letterAmount * Math.round(commonNameFontSize * FONT_SISE_COEF) > currentDivWidth) {
-
-        const summValue =  
-            Number(bookNameInput.style.width.split("px")[0]) + Number(authorNameInput.style.width.split("px")[0])
-        
-        // check common sum
-        if(wrapper.offsetWidth < summValue) {
-
-            let trialFontSize = commonNameFontSize - 1
-            while(true) {
-                if(letterAmount * Math.round(trialFontSize * FONT_SISE_COEF) > currentDivWidth && trialFontSize > 6) 
-                trialFontSize -= 1
-                else break
-            }
-
-            console.log(letterAmount * Math.round(trialFontSize * FONT_SISE_COEF), currentDivWidth, letterAmount, trialFontSize, Math.round(trialFontSize * FONT_SISE_COEF));
-            bookNameInput.style.fontSize =  trialFontSize + "px"
-            authorNameInput.style.fontSize = trialFontSize + "px"
-        } 
-        else {
-            element.style.width = letterAmount * Math.round(commonNameFontSize * FONT_SISE_COEF) + "px";
-        }
-    } 
-    else {
-        if(commonNameFontSize < initialFontValue) {
-            let trialFontSize = commonNameFontSize + 1
-            while(true) {
-                if(letterAmount * Math.round(trialFontSize * FONT_SISE_COEF) < currentDivWidth && trialFontSize < initialFontValue) 
-                    trialFontSize += 1
-                else break
-            }
-
-            bookNameInput.style.fontSize =  trialFontSize + "px"
-            authorNameInput.style.fontSize = trialFontSize + "px"
-            commonNameFontSize = trialFontSize
-        }
-
-        const value = letterAmount.length * Math.round(commonNameFontSize * FONT_SISE_COEF) 
-        if(value < currentDivWidth) {
-            element.style.width = value > initialWidth ? value + "px" : initialWidth + "px";
-        }
-    }
-}
 
 /*
 

@@ -5,8 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link
+        rel="shortcut icon"
+        href="favicon_96x96.png"
+        type="image/x-icon"
+    />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;700;900&display=swap" rel="stylesheet">
-    <title>NOTES</title>
+    <title>notes</title>
 </head>
 <body>
     <div class="container" id="main-container">
@@ -18,29 +23,17 @@
             </div>
         </div>
         <div class="note-input">
-            <input type="text" id="subpart-name" placeholder="subpart name">
-            <textarea name="note" id="note-textarea" cols="30" rows="8"></textarea>
+            <input type="text" class="initial-hidden" id="subpart-name" placeholder="subpart name">
+            <textarea name="note" class="initial-hidden" id="note-textarea" cols="30" rows="8"></textarea>
             <button id="add-button">ADD NOTE</button>
-            <div id="placeholder-div">
-                <div class="g-item"></div>
-                <div class="g-item"></div>
-                <div class="g-item"></div>
-                <div class="g-item"></div>
-                <div class="g-item"></div>
-                <div class="g-item"></div>
-                <div class="g-item"></div>
-                <div class="g-item"></div>
-                <div class="g-item"></div>
-                <div class="g-item"></div>
-                <div class="g-item"></div>
-                <div class="g-item"></div>
-                <div class="g-item"></div>
-            </div>
+            <div id="custom-loader"></div>
+            <div id="loader-begin-button">START</div>
         </div>
         <div class="added-part">
-            <div id="horizontal-text-line"></div>
+            <div id="horizontal-text-line" class="line"></div>
+            <div id="horizontal-text-line-bottom" class="line"></div>
             <div class="vertical-line-wrapper">
-                <div id="vertical-text-line"></div>
+                <div id="vertical-text-line" class="line"></div>
             </div>
             <ul id="added-notes">
                 <li id="no-notes">no notes yet</li>
@@ -52,6 +45,8 @@
                 </div>
             </div>
         </div>
+        <div class="right-name">NOTEMAKE</div>
+        <div class="black-footer"></div>
     </div>
 </body>
 <script src="script.js"></script>
