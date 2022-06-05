@@ -54,6 +54,7 @@ function handleLoader() {
  */
 function handleTextLines() {
     horizontalLine.innerText = "НОВИЙ ТЕКСТ ".repeat(15);
+
     document.getElementById('vertical-text-line').innerText = "НОВИЙ ТЕКСТ ".repeat(12) + "НОВИЙ PST.";
     document.getElementById('horizontal-text-line-bottom').innerText = "НОВИЙ ТЕКСТ ".repeat(3);
 }
@@ -74,16 +75,28 @@ function setMethodOnEvents() {
     bookNameInput.style.fontSize =  INITIAL_BOOK_FONT_VALUE + "px";
 
     // handling auto resize
-    authorNameInput.addEventListener("input", (e) => inputAutoResize(e, INITIAL_AUTHOR_FONT_VALUE));
-    bookNameInput.addEventListener("input", (e) => inputAutoResize(e, INITIAL_BOOK_FONT_VALUE));
+    authorNameInput.addEventListener("input", (e) => {
+        inputAutoResize(e, INITIAL_AUTHOR_FONT_VALUE);
+        e.target.value = uppercaseText(e.target.value);
+    });
+    bookNameInput.addEventListener("input", (e) => {
+        inputAutoResize(e, INITIAL_BOOK_FONT_VALUE);
+        e.target.value = uppercaseText(e.target.value);
+    });
 
     // handling text capitalization 
-    subpartNameInput.addEventListener('input', (e) => currentSubpartName = capitalizeText(e.target.value));
+    subpartNameInput.addEventListener('input', (e) => {
+        currentSubpartName = uppercaseText(e.target.value);
+    });
 
     noteTextArea.placeholder = 'YOUR TEXT';
     // check for symbol every time user inputs something
     noteTextArea.addEventListener('input', (e) => {
         e.target.value = checkTextForSybmols(e.target.value);
+    });
+    
+    partNameInput.addEventListener('input', (e) => {
+        currentPartName = uppercaseText(e.target.value);
     })
 }
 

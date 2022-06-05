@@ -2,12 +2,24 @@
  * CORE FUNCTIONS AND STORE-OBJECTS OF PROJECT!
  */
 
-const notesArray = [];
+/**
+ *  @typedef {Object.<string, string[]>} Notes
+ * 
+ *  @typedef {Object} MessageNote
+ *  @property {string} title
+ *  @property {Notes} notes
+ *  @property {boolean} wasClicked
+ */
 
-let currentNote = {};
-let currentNoteIndex = 1;
+
+/** @type MessageNote */
+let currentMessageNote = {};
+
+/** @type MessageNote[] */
+let notesStoreV2 = [];
+
+let currentPartName = '';
 let currentSubpartName = '';
-let currentSubnoteIndex = 1;
 
 
 /**
@@ -16,59 +28,94 @@ let currentSubnoteIndex = 1;
  * 
  * @returns {[number, number]} tuple of [total notes length, current note's length]
  */
-function addNewNote(text) {
+function addNewNoteV2(text) {
     // note to save 
-    const noteContent = SYMBOL + checkLastSymbol(text)
+    const noteContent = SYMBOL + checkLastSymbol(text);
 
-    // create new array if this subpart is new 
-    if(!currentNote[currentSubpartName]) {
-        currentNote[currentSubpartName] = [] 
-        currentSubnoteIndex = 1
-        updateWorkingNote()
+    if (currentMessageNote.title !== currentPartName) {
+        setNewMessageNote();
     }
-    
+
+    if (!currentMessageNote.notes[currentSubpartName]) {
+        currentMessageNote.notes[currentSubpartName] = [];
+    }
+
     // gets current chars length
-    const noteTextCharNumber = text.split('').length
-    let totalCharNumber = Object.values(currentNote)
-        .reduce((acc, array) => acc += array.join(' ').split('').length, 0) 
-    
-        // check if not out range
-    if(totalCharNumber + noteTextCharNumber <= LETTER_MAX) {
-        currentNote[currentSubpartName].push(noteContent)
-        // console.log(currentNote)
-        
+    const noteTextCharNumber = text.split('').length;
+    let totalCharNumber = Object.values(currentMessageNote.notes)
+        .reduce((acc, array) => acc += array.join(' ').split('').length, 0);
+
+    if (totalCharNumber + noteTextCharNumber <= LETTER_MAX) {
+        currentMessageNote.notes[currentSubpartName].push(noteContent);
+
     } else {
-        // checks if note include only one subpart name
-        if(Object.keys(currentNote).length === 1) {
-            if(currentSubnoteIndex === 1) {
-                currentNote[currentSubpartName + "#1"] = currentNote[currentSubpartName]
-                delete currentNote[currentSubpartName]
+        if (Object.keys(currentMessageNote.notes).length === 1) {
+            if (currentNoteIndexV2() === 1) {
+                currentMessageNote.notes[currentSubpartName + "#1"] = currentMessageNote.notes[currentSubpartName];
+                delete currentMessageNote.notes[currentSubpartName];
             }
-            updateNotesAreaWithNewNote(currentNote)
-        
-            currentSubpartName = currentSubnoteIndex === 1 ? currentSubpartName + "#2" : currentSubpartName.split('#')[0] + '#' + (currentSubnoteIndex + 1)
-            currentNote = {
-                [currentSubpartName]: [noteContent]
-            }
-            currentSubnoteIndex++
+
+            currentSubpartName = currentNoteIndexV2() === 1
+                ? currentSubpartName + '#2'
+                : currentSubpartName.split('#')[0] + '#' + (currentNoteIndexV2() + 1);
+
+            setNewMessageNote({
+                [currentPartName]: [noteContent],
+            });
         } else {
-            // const index = Math.round( Object.keys(currentNote).length /2)
-            const tempArray = currentNote[currentSubpartName]
-         
-            delete currentNote[currentSubpartName]
-            updateNotesAreaWithNewNote(currentNote)
-            currentNote = {
-                [currentSubpartName]: [...tempArray, noteContent]
-            }
+            const tempArray = currentMessageNote.notes[currentSubpartName];
+            delete currentMessageNote.notes[currentSubpartName];
+
+            setNewMessageNote({
+                [currentPartName]: [...tempArray, noteContent],
+            });
         }
 
-        currentNoteIndex++
-        updateWorkingNote()
-        openedHeader.innerText = "working " + (currentNoteIndex <= 9 ? '0' + String(currentNoteIndex): currentNoteIndex)
-        
-        totalCharNumber = Object.values(currentNote)
-            .reduce((acc, array) => acc += array.join(' ').split('').length, 0) 
+        totalCharNumber = Object.values(currentMessageNote.notes)
+            .reduce((acc, array) => acc += array.join(' ').split('').length, 0) ;
     }
 
     return [totalCharNumber, noteTextCharNumber];
+}
+
+/**
+ * Helpers
+ */
+
+
+/**
+ * Sets new current message note; saves old one if exists
+ * @param {Notes} notes 
+ */
+function setNewMessageNote(notes = {}) {
+    if (currentMessageNote.title) {
+        notesStoreV2.push(currentMessageNote);
+    }
+
+    currentMessageNote = {
+        title: currentPartName,
+        wasClicked: false,
+        notes,
+    }
+}
+
+/**
+ * Gets formated number of NotesStore's index
+ * @param {number} inputIndex possible input index
+ * @returns {string} formated index
+ */
+function getHeaderText(inputIndex = null) {
+    let index = (inputIndex ?? notesStoreV2.length) + 1; 
+
+    return index <= 9
+        ? '0' + String(index)
+        : index;
+}
+
+/**
+ * Gets index of current note with current title
+ * @returns {number} index 
+ */
+function currentNoteIndexV2() {
+    return currentMessageNote.notes[currentPartName].length;
 }

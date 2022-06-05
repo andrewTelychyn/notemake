@@ -349,7 +349,7 @@ h1 {
 .black-footer {
     position: absolute;
     height: 30px;
-    bottom: 0;
+    bottom: -1px;
     left: 0;
     background-color: black;
     width: 100%;

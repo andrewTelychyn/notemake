@@ -129,3 +129,13 @@ function checkLastSymbol(text) {
 
     return letterArray.join('');
 }
+
+/**
+ * Uppercase all text
+ * @param {string} text input text
+ * 
+ * @returns {string} result text
+ */
+function uppercaseText(text) {
+    return checkTextForSybmols(text).toUpperCase();
+}
