@@ -188,8 +188,9 @@ h1 {
 
 .added-part {
     position: relative;
+    height: fit-content;
+    min-height: 1019px;
     width: 90%;
-    height: 1019px;
     padding-top: 10%;
     display: flex;
     flex-direction: row;
@@ -229,8 +230,10 @@ h1 {
 }
 
 #added-notes {
+    height: min-content;
     min-width: 400px;
     margin-right: 100px;
+    backdrop-filter: blur(1px)
 }
 
 #added-notes > li {
@@ -318,6 +321,8 @@ h1 {
 }
 
 #opened-part {
+    margin-bottom: 100px;
+    height: fit-content;
     flex-grow: 1;
 }
 
@@ -329,6 +334,13 @@ h1 {
 
 #working-note-area ul {
     padding: 10px 20px;
+}
+
+#working-note-area h2 {
+    letter-spacing: 0.10em;
+    font-size: 26px;
+    margin-bottom: 35px;
+    text-transform: uppercase;
 }
 
 #working-note-area h3 {

@@ -18,10 +18,12 @@ function copyText(index) {
 
     let outText = messageNote.title + ".\n\n"
     for(let [key, value] of Object.entries(messageNote.notes)) {
-        outText += key + ':\n' + value.map(item => item + '\n').join('') + '\n'
+        const h3 = key ? ('\n' + key + ':\n') : '';
+
+        outText += h3 + value.map(item => item + '\n').join('');
     } 
 
-    outText += "(c) " + bookNameInput.value + ". " + authorNameInput.value + ".";
+    outText += "\n\n(c) " + bookNameInput.value + ". " + authorNameInput.value + ".";
 
 
     navigator.clipboard.writeText(outText).then(() => {})
@@ -48,11 +50,12 @@ function updateWorkingArea(noteIndex = null) {
     openedHeader.innerText = sectionTitle;
 
     // filling working area
-    workingArea.innerHTML = `<h3>${messageNote.title}.</h3>`
+    workingArea.innerHTML = messageNote.title ? (`<h2>${messageNote.title}.</h2>`) : '';
 
     let index = 1
     for(let [key, value] of Object.entries(messageNote.notes)) {
-        const h3 = `<h3 id="opened-notes-${index}">${key}</h3>`
+        const h3 = key ? `<h3 id="opened-notes-${index}">${key}</h3>` : '';
+
         const lis = value.map((item) => `<li>${item}</li>`).join('')
         const ul = `<ul id="opened-subpart-${index}">${lis}</ul>`
     
@@ -76,7 +79,7 @@ function updateWorkingNote() {
         return `<li class="${item.wasClicked ? '': 'not-'}clicked" id="list-${index + 1}">
                     <p>${getHeaderText(index)}</p>
                     <ul id="subpart-list-${index + 1}"  class="subpart-list">
-                        ${Object.keys(item.notes).map(name => `<li>${name}</li>`).join('')}
+                        ${Object.keys(item.notes).filter(n => !!n).map(name => `<li>${name}</li>`).join('')}
                     </ul>
                     <button>${index === notesStoreV2.length ? 'working' : 'open' }</button>
                 </li>`
@@ -95,7 +98,6 @@ function updateWorkingNote() {
             /** @type Function */
             let callback;
 
-
             if (index === array.length - 1) {
                 callback = () => updateWorkingArea(noteIndex);
             } else {
@@ -112,7 +114,7 @@ function updateWorkingNote() {
  * @returns {void}
  */
 function handleNewNote() {
-    if(!subpartNameInput.value.trim() || !noteTextArea.value) return
+    if(!noteTextArea.value) return
 
     noteTextArea.placeholder = "YOUR TEXT"
 

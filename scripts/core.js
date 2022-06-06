@@ -49,7 +49,9 @@ function addNewNoteV2(text) {
         currentMessageNote.notes[currentSubpartName].push(noteContent);
 
     } else {
+        // only one subpart in a message
         if (Object.keys(currentMessageNote.notes).length === 1) {
+            // only one 
             if (currentNoteIndexV2() === 1) {
                 currentMessageNote.notes[currentSubpartName + "#1"] = currentMessageNote.notes[currentSubpartName];
                 delete currentMessageNote.notes[currentSubpartName];
@@ -60,14 +62,16 @@ function addNewNoteV2(text) {
                 : currentSubpartName.split('#')[0] + '#' + (currentNoteIndexV2() + 1);
 
             setNewMessageNote({
-                [currentPartName]: [noteContent],
+                [currentSubpartName]: [noteContent],
             });
+
+        // many subparts
         } else {
             const tempArray = currentMessageNote.notes[currentSubpartName];
             delete currentMessageNote.notes[currentSubpartName];
 
             setNewMessageNote({
-                [currentPartName]: [...tempArray, noteContent],
+                [currentSubpartName]: [...tempArray, noteContent],
             });
         }
 
@@ -88,7 +92,7 @@ function addNewNoteV2(text) {
  * @param {Notes} notes 
  */
 function setNewMessageNote(notes = {}) {
-    if (currentMessageNote.title) {
+    if (currentMessageNote.notes && Object.keys(currentMessageNote.notes)) {
         notesStoreV2.push(currentMessageNote);
     }
 
@@ -117,5 +121,18 @@ function getHeaderText(inputIndex = null) {
  * @returns {number} index 
  */
 function currentNoteIndexV2() {
-    return currentMessageNote.notes[currentPartName].length;
+    let index = 0;
+    const name = currentSubpartName.split('#')[0];
+
+    [...notesStoreV2, currentMessageNote].forEach((item) => {
+        Object
+            .keys(item.notes)
+            .forEach((note) => {
+                if (note.includes(name)) {
+                    index++;
+                }
+            })
+    });
+
+    return index;
 }
